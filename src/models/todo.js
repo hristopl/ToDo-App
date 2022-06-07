@@ -44,6 +44,7 @@ const getArchivedTodo = () => Todo.find({archive: true})
 const updateTodo = todo => {
   const filter = {_id: todo.id}
   const updated = {$set:{title:todo.title, description:todo.description}}
+  console.log({filter,updated});
   return Todo.updateOne(filter,updated)
 }
 const archiveTodo = (todo) => {

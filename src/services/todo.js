@@ -20,8 +20,8 @@ const create = async todo => {
 //   return updateTodo(validTodo)
 // }
 
-const update = todo => validateTodo(todo).then(updateTodo)
-const archive = todo => validateTodo(todo).then(archiveTodo)
+const update = todo => validateTodo(todo).then(updateTodo(todo))
+const archive = todo => archiveTodo(todo)
 
 const get = getTodo
 const getById  = todo => getTodoById(todo)
