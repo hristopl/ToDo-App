@@ -1,4 +1,4 @@
-import {create,get,del,update,getArchived,getById,archive,getArchivedById} from '../services/todo.js'
+import {create,get,del,update,getArchived,getById,archive} from '../services/todo.js'
 
 const createTodo = (req, res) => {
   const todo = req.body
@@ -27,17 +27,13 @@ const listArchivedTodo = (req, res) => {
 }
 
 const updateTodo = (req,res) => {
-  const todo = req.body.id
-  const updated = {$set: {title: req.body.title, description: req.body.description}}
-  update(todo,updated)
+  update(req.body)
   .then(() => res.json({status: 'Ok!'}))
   .catch(e => res.status(500).json({status: 'err', message: e.message}))
 }
 
 const archiveTodo = (req,res) => {
-  const todo = req.body.id
-  const updated = {$set: {archive:req.body.archive}}
-  archive(todo,updated)
+  archive(req.body)
   .then(()=>res.json({status:'Ok!'}))
   .catch(e=>res.status(500).json({status:'err', message:e.message}))
 }

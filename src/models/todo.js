@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import { update } from 'ramda';
 mongoose.connect('mongodb://127.0.0.1:27017/todoApp', {
   useNewUrlParser: true,
 })
@@ -42,8 +41,16 @@ const add = todo =>Todo.create(todo)
 const getTodo = () => Todo.find({archive: false})
 const getTodoById = (id) => Todo.findById(id)
 const getArchivedTodo = () => Todo.find({archive: true})
-const updateTodo = (todo, updated) => Todo.updateOne(todo,updated)
-const archiveTodo = (todo, updated) => Todo.updateOne(todo,updated)
+const updateTodo = todo => {
+  const filter = {_id: todo.id}
+  const updated = {$set:{title:todo.title, description:todo.description}}
+  return Todo.updateOne(filter,updated)
+}
+const archiveTodo = (todo) => {
+  const filter = {_id: todo.id}
+  const updated = {$set: {archive:todo.archive}}
+  return Todo.updateOne(filter,updated)
+}
 const deleteTodoById = id => Todo.findByIdAndDelete(id) 
 
 
