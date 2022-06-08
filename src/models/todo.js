@@ -40,7 +40,6 @@ const returnIds = todos => todos.map(todo => {
 })
 
 const add = todo => Todo.create(todo)
-  .then(todo => returnIds(todo))
 
 const getTodos = () => Todo.find({ archive: false }).lean()
   .then(returnIds)
