@@ -41,11 +41,12 @@ const returnIds = todos => todos.map(todo => {
 
 const add = todo => Todo.create(todo)
 
-const getTodos = () => Todo.find({ archive: false }).lean()
+const getTodos = () => Todo.find({ archive: false }).lean().sort({ createdDate: -1 })
   .then(returnIds)
 
-const todoById = (id) => Todo.findById(id)
-const getArchivedTodos = () => Todo.find({ archive: true }).lean()
+const todoById = (id) => Todo.findById(id).sort({ createdDate: -1 })
+
+const getArchivedTodos = () => Todo.find({ archive: true }).lean().sort({ createdDate: -1 })
   .then(returnIds)
 
 const updateTodos = todo => {

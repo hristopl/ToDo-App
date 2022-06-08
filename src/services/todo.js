@@ -16,7 +16,7 @@ const create = async todo => {
 }
 
 const update = todo => validateTodo(todo).then(updateTodos)
-const archive = todo => validateTodo(todo).then(archiveTodos)
+const archive = todo => archiveTodos(todo)
 const get = getTodos
 const getById = todo => todoById(todo)
 const getArchived = getArchivedTodos
