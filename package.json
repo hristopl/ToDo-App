@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "jest": "^28.1.0",
-    "mongoose": "^6.3.5"
+    "mongoose": "^6.3.5",
+    "standard": "^17.0.0"
   }
 }

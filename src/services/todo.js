@@ -1,8 +1,8 @@
-import { isNil } from 'ramda';
-import {add,getTodo,deleteTodoById,updateTodo,getArchivedTodo,getTodoById,archiveTodo} from '../models/todo.js'
- 
+import { isNil } from 'ramda'
+import { add, getTodos, deleteTodoById, updateTodos, getArchivedTodos, todoById, archiveTodos } from '../models/todo.js'
+
 const validateTodo = todo => {
-  const {title, description} = todo
+  const { title, description } = todo
   if ([title, description].some(isNil)) {
     return Promise.reject(new Error('Title or description is Nil!'))
   }
@@ -15,21 +15,13 @@ const create = async todo => {
   return add(validTodo)
 }
 
-// const update = async todo => {
-//   const validTodo = await validateTodo(todo)
-//   return updateTodo(validTodo)
-// }
-
-const update = todo => validateTodo(todo).then(updateTodo(todo))
-const archive = todo => archiveTodo(todo)
-
-const get = getTodo
-const getById  = todo => getTodoById(todo)
-const getArchived = getArchivedTodo
+const update = todo => validateTodo(todo).then(updateTodos)
+const archive = todo => validateTodo(todo).then(archiveTodos)
+const get = getTodos
+const getById = todo => todoById(todo)
+const getArchived = getArchivedTodos
 
 const del = id => deleteTodoById(id)
-
-
 
 export {
   create,
@@ -38,5 +30,5 @@ export {
   getArchived,
   del,
   update,
-  archive,
+  archive
 }
