@@ -1,3 +1,4 @@
+import { prop } from 'ramda'
 import mongoose from 'mongoose'
 mongoose.connect('mongodb://127.0.0.1:27017/todoApp', {
   useNewUrlParser: true
@@ -34,20 +35,23 @@ toDoSchema.index({ archive: 1 })
 
 const Todo = mongoose.model('Todo', toDoSchema)
 
-const returnIds = todos => todos.map(todo => {
+const convertSingleId = todo => {
   const { _id, ...rest } = todo
   return { ...rest, id: _id }
-})
+}
+const convertIds = todos => todos.map(convertSingleId)
 
 const add = todo => Todo.create(todo)
+  .then(prop('_doc'))
+  .then(convertSingleId)
 
 const getTodos = () => Todo.find({ archive: false }).lean().sort({ createdDate: -1 })
-  .then(returnIds)
+  .then(convertIds)
 
 const todoById = (id) => Todo.findById(id).sort({ createdDate: -1 })
 
 const getArchivedTodos = () => Todo.find({ archive: true }).lean().sort({ createdDate: -1 })
-  .then(returnIds)
+  .then(convertIds)
 
 const updateTodos = todo => {
   const filter = { _id: todo.id }

@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "jest",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -27,8 +28,12 @@
     "ramda": "^0.28.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.18.2",
+    "@babel/preset-env": "^7.18.2",
+    "babel-jest": "^28.1.1",
     "jest": "^28.1.0",
     "mongoose": "^6.3.5",
+    "nodemon": "^2.0.16",
     "standard": "^17.0.0"
   }
 }

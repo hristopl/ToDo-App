@@ -10,11 +10,11 @@ app.get('/todo', listTodo)
 
 app.get('/todo/id/:id', todoById)
 
-app.get('/archive', listArchivedTodo)
+app.get('/todo/archive', listArchivedTodo)
 
 app.put('/todo', updateTodo)
 
-app.put('/archive', archiveTodo)
+app.put('/todo/archive', archiveTodo)
 
 app.delete('/todo/:id', deleteTodo)
 
