@@ -45,7 +45,10 @@ const add = todo => Todo.create(todo)
   .then(prop('_doc'))
   .then(convertSingleId)
 
-const getTodos = (page, size) => Todo.find({ archive: false }).limit(size * 1).skip(page - 1).lean().sort({ createdDate: -1 })
+const getTodos = (page, size) => Todo.find({ archive: false })
+  .limit(size * 1).skip((page - 1) * size)
+  .lean()
+  .sort({ createdDate: -1 })
   .then(convertIds)
 
 const todoById = (id) => Todo.findById(id).sort({ createdDate: -1 })
