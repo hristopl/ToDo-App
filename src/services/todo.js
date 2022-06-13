@@ -10,12 +10,14 @@ const validate = todo => {
   return Promise.resolve(todo)
 }
 
-const isPositiveNumber = number => isNaN(number) && number > 0
+const isPositiveNumber = number => number > 0
 
-const validatePageAndSize = (page, size) =>
-  [page, size].some(isPositiveNumber)
-    ? Promise.resolve(page, size)
-    : Promise.reject(new Error('Page or size is not a number!'))
+const validatePageAndSize = (page, size) => {
+  if ([page, size].some(isPositiveNumber)) {
+    return Promise.resolve(page)
+  }
+  return Promise.reject(new Error('Page is size in not valid!'))
+}
 
 const create = todo => validate(todo).then(add)
 
