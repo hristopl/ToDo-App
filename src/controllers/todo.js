@@ -1,15 +1,14 @@
 import { create, get, del, update, getArchived, getById, archive } from '../services/todo.js'
 
-const createTodo = (req, res) => {
+const createTodos = (req, res) => {
   const todo = req.body
   create(todo)
     .then((todo) => res.json({ status: 'Ok!', todo }))
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))
 }
 
-const listTodo = (req, res) => {
+const listTodos = (req, res) => {
   const url = req.query
-  console.log(url)
   get(url)
     .then((todos) => res.send(todos))
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))
@@ -22,19 +21,19 @@ const todoById = (req, res) => {
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))
 }
 
-const listArchivedTodo = (req, res) => {
+const listArchivedTodos = (req, res) => {
   getArchived()
     .then((todo) => res.send(todo))
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))
 }
 
-const updateTodo = (req, res) => {
+const updateTodos = (req, res) => {
   update(req.body)
     .then(() => res.json({ status: 'Ok!' }))
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))
 }
 
-const archiveTodo = (req, res) => {
+const archiveTodos = (req, res) => {
   archive(req.body)
     .then(() => res.json({ status: 'Ok!' }))
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))
@@ -48,11 +47,11 @@ const deleteTodo = (req, res) => {
 }
 
 export {
-  createTodo,
-  listTodo,
+  createTodos,
+  listTodos,
   todoById,
-  listArchivedTodo,
-  updateTodo,
+  listArchivedTodos,
+  updateTodos,
   deleteTodo,
-  archiveTodo
+  archiveTodos
 }

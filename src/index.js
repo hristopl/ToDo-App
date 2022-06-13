@@ -1,20 +1,20 @@
 import express from 'express'
-import { createTodo, listTodo, deleteTodo, updateTodo, listArchivedTodo, todoById, archiveTodo } from './controllers/todo.js'
+import { createTodos, listTodos, deleteTodo, updateTodos, listArchivedTodos, todoById, archiveTodos } from './controllers/todo.js'
 
 const app = express()
 app.use(express.json())
 
-app.post('/todo', createTodo)
+app.post('/todo', createTodos)
 
-app.get('/todo', listTodo)
+app.get('/todo', listTodos)
 
 app.get('/todo/id/:id', todoById)
 
-app.get('/todo/archive', listArchivedTodo)
+app.get('/todo/archive', listArchivedTodos)
 
-app.put('/todo', updateTodo)
+app.put('/todo', updateTodos)
 
-app.put('/todo/archive', archiveTodo)
+app.put('/todo/archive', archiveTodos)
 
 app.delete('/todo/:id', deleteTodo)
 

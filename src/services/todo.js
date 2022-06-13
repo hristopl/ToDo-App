@@ -16,7 +16,7 @@ const validatePageAndSize = (page, size) => {
   if ([page, size].some(isPositiveNumber)) {
     return Promise.resolve(page)
   }
-  return Promise.reject(new Error('Page is size in not valid!'))
+  return Promise.reject(new Error('Page or size in not valid!'))
 }
 
 const create = todo => validate(todo).then(add)
@@ -25,7 +25,9 @@ const update = todo => validate(todo).then(updateTodos)
 const archive = todo => archiveTodos(todo)
 const get = (url) => {
   const { page = 1, size = 5 } = url
-  return validatePageAndSize(page, size).then(getTodos)
+  const pageNum = parseInt(page)
+  const pageSize = parseInt(size)
+  return validatePageAndSize(pageNum, pageSize).then(getTodos)
 }
 
 const getById = todo => todoById(todo)
