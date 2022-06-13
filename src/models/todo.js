@@ -47,15 +47,19 @@ const add = todo => Todo.create(todo)
 
 const getTodos = (page, size) =>
   Todo.find({ archive: false })
-    .lean()
     .sort({ createdDate: -1 })
-    .limit(size * 1).skip((page - 1) * size)
+    .skip((size * page) - size)
+    .limit(size)
+    .lean()
     .then(convertIds)
 
 const todoById = (id) => Todo.findById(id).sort({ createdDate: -1 })
 
-const getArchivedTodos = () => Todo.find({ archive: true }).lean().sort({ createdDate: -1 })
-  .then(convertIds)
+const getArchivedTodos = () =>
+  Todo.find({ archive: true })
+    .lean()
+    .sort({ createdDate: -1 })
+    .then(convertIds)
 
 const updateTodos = todo => {
   const filter = { _id: todo.id }

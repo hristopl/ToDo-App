@@ -25,9 +25,7 @@ const update = todo => validate(todo).then(updateTodos)
 const archive = todo => archiveTodos(todo)
 const get = (url) => {
   const { page = 1, size = 5 } = url
-  const pageNum = parseInt(page)
-  const pageSize = parseInt(size)
-  return validatePageAndSize(pageNum, pageSize).then(getTodos)
+  return validatePageAndSize(page, size).then(getTodos)
 }
 
 const getById = todo => todoById(todo)
@@ -43,5 +41,6 @@ export {
   del,
   update,
   archive,
-  isPositiveNumber
+  isPositiveNumber,
+  validate
 }
