@@ -1,6 +1,8 @@
 import { isNil } from 'ramda'
 import { add, getTodos, deleteTodoById, updateTodos, getArchivedTodos, todoById, archiveTodos } from '../models/todo.js'
 
+const isPositiveNumber = number => number > 0
+
 const validate = todo => {
   const { title, description } = todo
   if ([title, description].some(isNil)) {
@@ -10,26 +12,31 @@ const validate = todo => {
   return Promise.resolve(todo)
 }
 
-const isPositiveNumber = number => number > 0
-
 const validatePageAndSize = (page, size) => {
-  if ([page, size].some(isPositiveNumber)) {
-    return Promise.resolve(page)
+  if ([page, size].every(isPositiveNumber)) {
+    return Promise.resolve({ page, size })
   }
-  return Promise.reject(new Error('Page or size in not valid!'))
+  return Promise.reject(new Error('Page or size is not valid!'))
 }
 
 const create = todo => validate(todo).then(add)
 
 const update = todo => validate(todo).then(updateTodos)
 const archive = todo => archiveTodos(todo)
-const get = (url) => {
-  const { page = 1, size = 5 } = url
-  return validatePageAndSize(page, size).then(getTodos)
+const get = ({ page = 1, size = 5 }) => {
+  const pageNum = parseInt(page)
+  const pageSize = parseInt(size)
+  console.log({ page, size, pageNum, pageSize })
+  return validatePageAndSize(pageNum, pageSize).then(getTodos)
 }
 
 const getById = todo => todoById(todo)
-const getArchived = getArchivedTodos
+const getArchived = ({ page = 1, size = 5 }) => {
+  const pageNum = Number(page)
+  const pageSize = Number(size)
+
+  return validatePageAndSize(pageNum, pageSize).then(getArchivedTodos)
+}
 
 const del = id => deleteTodoById(id)
 
@@ -41,6 +48,7 @@ export {
   del,
   update,
   archive,
+  validate,
   isPositiveNumber,
-  validate
+  validatePageAndSize
 }

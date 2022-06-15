@@ -9,7 +9,6 @@ const createTodos = (req, res) => {
 
 const listTodos = (req, res) => {
   const url = req.query
-  console.log(url)
   get(url)
     .then((todos) => res.send(todos))
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))
@@ -23,7 +22,8 @@ const todoById = (req, res) => {
 }
 
 const listArchivedTodos = (req, res) => {
-  getArchived()
+  const url = req.query
+  getArchived(url)
     .then((todo) => res.send(todo))
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))
 }
