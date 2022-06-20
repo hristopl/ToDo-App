@@ -1,11 +1,15 @@
-import { getTodos, getArchivedTodos, updateTodos } from '../../src/models/todo'
-import { get, getArchived, update, isPositiveNumber, validatePageAndSize, validate, convertSingleId } from '../../src/services/todo'
+import { getTodos, getArchivedTodos, updateTodos, add, archiveTodos, todoById, deleteTodoById } from '../../src/models/todo'
+import { get, getArchived, update, isPositiveNumber, validatePageAndSize, validate, convertSingleId, create, archive, getById, del } from '../../src/services/todo'
 import { describe, expect, test } from '@jest/globals'
 
-jest.mock('../src/models/todo', () => ({
+jest.mock('../../src/models/todo', () => ({
   getTodos: jest.fn(),
   getArchivedTodos: jest.fn(),
-  updateTodos: jest.fn()
+  updateTodos: jest.fn(),
+  add: jest.fn(),
+  archiveTodos: jest.fn(),
+  todoById: jest.fn(),
+  deleteTodoById: jest.fn()
 }))
 
 describe('get', () => {
@@ -44,6 +48,58 @@ describe('update', () => {
     await update(todo)
 
     expect(updateTodos).toHaveBeenCalledWith(todo)
+  })
+})
+
+describe('create', () => {
+  test('should create todo', async () => {
+    const todo = {
+      title: 'Go to gym',
+      description: 'Go to training today.'
+    }
+
+    await create(todo)
+
+    expect(add).toHaveBeenCalledWith(todo)
+  })
+})
+
+describe('archive', () => {
+  test('should archive todo', async () => {
+    const todo = {
+      title: 'Go to gym',
+      description: 'Go to training today.'
+    }
+
+    await archive(todo)
+
+    expect(archiveTodos).toHaveBeenCalledWith(todo)
+  })
+})
+
+describe('getById', () => {
+  test('should get todo by Id', async () => {
+    const todo = {
+      title: 'Go to gym',
+      description: 'Go to training today.'
+    }
+
+    await getById(todo)
+
+    expect(todoById).toHaveBeenCalledWith(todo)
+  })
+})
+
+describe('del', () => {
+  test('should delete todo', async () => {
+    const todo = {
+      title: 'Go to gym',
+      description: 'Go to training today.'
+    }
+
+    await del(todo)
+
+    expect(deleteTodoById).toHaveBeenCalledWith(todo)
   })
 })
 
@@ -133,7 +189,7 @@ describe('validate', () => {
   })
 })
 
-describe('convertSingleId', () => {
+describe.skip('convertSingleId', () => {
   test('should convert Id of todo', () => {
     const todo = {
       _id: 194932042234

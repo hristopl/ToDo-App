@@ -29,7 +29,7 @@ const sortObj = obj(sortFn, skipObj)
 const findObj = obj(findFn, sortObj)
 
 describe.skip('getTodos', () => {
-  test('should work', () => {
+  test.skip('should work', () => {
     mongoose.model.mockImplementation(() => ({ find: findObj }))
 
     getTodos({ page: 1, size: 5 })
