@@ -22,18 +22,17 @@ const validatePageAndSize = (page, size) => {
 const create = todo => validate(todo).then(add)
 
 const update = todo => validate(todo).then(updateTodos)
-const archive = todo => archiveTodos(todo)
+const archive = todo => validate(todo).then(archiveTodos)
 const get = ({ page = 1, size = 5 }) => {
   const pageNum = parseInt(page)
   const pageSize = parseInt(size)
-  console.log({ page, size, pageNum, pageSize })
   return validatePageAndSize(pageNum, pageSize).then(getTodos)
 }
 
 const getById = todo => todoById(todo)
 const getArchived = ({ page = 1, size = 5 }) => {
-  const pageNum = Number(page)
-  const pageSize = Number(size)
+  const pageNum = parseInt(page)
+  const pageSize = parseInt(size)
 
   return validatePageAndSize(pageNum, pageSize).then(getArchivedTodos)
 }

@@ -1,6 +1,51 @@
-import { isPositiveNumber, validatePageAndSize, validate } from '../src/services/todo.js'
-import { convertSingleId } from '../src/models/todo.js'
-import { describe, test, expect } from '@jest/globals'
+import { getTodos, getArchivedTodos, updateTodos } from '../../src/models/todo'
+import { get, getArchived, update, isPositiveNumber, validatePageAndSize, validate, convertSingleId } from '../../src/services/todo'
+import { describe, expect, test } from '@jest/globals'
+
+jest.mock('../src/models/todo', () => ({
+  getTodos: jest.fn(),
+  getArchivedTodos: jest.fn(),
+  updateTodos: jest.fn()
+}))
+
+describe('get', () => {
+  test('should return todos', async () => {
+    await get({ page: 1, size: 5 })
+
+    expect(getTodos).toHaveBeenCalledWith({ page: 1, size: 5 })
+  })
+  test('should parse page and size', async () => {
+    await get({ page: '1', size: '5' })
+
+    expect(getTodos).toHaveBeenCalledWith({ page: 1, size: 5 })
+  })
+})
+
+describe('getArchived', () => {
+  test('should return archived todos', async () => {
+    await getArchived({ page: 1, size: 5 })
+
+    expect(getArchivedTodos).toHaveBeenCalledWith({ page: 1, size: 5 })
+  })
+  test('should parse page and size', async () => {
+    await getArchived({ page: '1', size: '5' })
+
+    expect(getArchivedTodos).toHaveBeenCalledWith({ page: 1, size: 5 })
+  })
+})
+
+describe('update', () => {
+  test('should update todo', async () => {
+    const todo = {
+      title: 'Go to gym',
+      description: 'Go to training today.'
+    }
+
+    await update(todo)
+
+    expect(updateTodos).toHaveBeenCalledWith(todo)
+  })
+})
 
 describe('isPositiveNumber', () => {
   test('should return false if value is NaN', () => {
@@ -47,13 +92,17 @@ describe('validatePageAndSize', () => {
       expect(err.message).toBe(message)
     }
   })
-  test('', async () => {
+  test('should throw error if page or size is NaN', async () => {
+    const message = 'Page or size is not valid!'
     const page = NaN
     const size = 4
 
-    const result = await validatePageAndSize(page, size)
-
-    console.log(result)
+    try {
+      await validatePageAndSize(page, size)
+      throw new Error('Should not get here!')
+    } catch (err) {
+      expect(err.message).toBe(message)
+    }
   })
 })
 
