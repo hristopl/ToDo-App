@@ -3,29 +3,30 @@ import mongoose from 'mongoose'
 import { createSession } from './controllers/session.js'
 import { createTodos, listTodos, deleteTodo, updateTodos, listArchivedTodos, todoById, archiveTodos } from './controllers/todo.js'
 import { createUser, listUser } from './controllers/user.js'
+import { auth } from './controllers/authentication.js'
 
 const app = express()
 app.use(express.json())
 
-app.post('/todo', createTodos)
+app.post('/todo', [auth], createTodos)
 
-app.post('/register', createUser)
+app.post('/register', [auth], createUser)
 
-app.post('/login', createSession)
+app.post('/login', [auth], createSession)
 
-app.get('/users/id/:id', listUser)
+app.get('/users/id/:id', [auth], listUser)
 
-app.get('/todo', listTodos)
+app.get('/todo', [auth], listTodos)
 
-app.get('/todo/id/:id', todoById)
+app.get('/todo/id/:id', [auth], todoById)
 
-app.get('/todo/archive', listArchivedTodos)
+app.get('/todo/archive', [auth], listArchivedTodos)
 
-app.put('/todo', updateTodos)
+app.put('/todo', [auth], updateTodos)
 
-app.put('/todo/archive', archiveTodos)
+app.put('/todo/archive', [auth], archiveTodos)
 
-app.delete('/todo/:id', deleteTodo)
+app.delete('/todo/:id', [auth], deleteTodo)
 
 mongoose.connect('mongodb://127.0.0.1:27017/todoApp', { useNewUrlParser: true })
   .then(() => {

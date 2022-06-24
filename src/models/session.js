@@ -22,15 +22,10 @@ const sessionSchema = new Schema({
   }
 })
 
-// const convertSingeId = session => {
-//   const { _id, ...rest } = session
-//   return { ...rest, sessionId: _id }
-// }
-
-// const convertIds = session => session.map(convertSingeId)
-
 const Session = mongoose.model('Session', sessionSchema)
 
-const addSession = data => Session.create(data)
+const addSession = data => Session.create(data).then((result) => ({ sessionId: result.id }))
 
-export { addSession }
+const findSessionById = id => Session.findById(id)
+
+export { addSession, findSessionById }

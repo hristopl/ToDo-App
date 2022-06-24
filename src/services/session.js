@@ -13,17 +13,16 @@ const validateSession = data => {
   return Promise.resolve(data)
 }
 
-const checkPass = data => {
-  const userData = findByEmail(data)
+const checkPass = async data => {
+  const userData = await findByEmail(data.email)
   const { password } = data
   const hashedPassword = md5(password)
-  console.log({ userData, password, hashedPassword })
-
   if (hashedPassword === userData.password) {
-    return Promise.resolve(data)
+    return data
   }
-  return Promise.reject(new Error('Password is not equal!'))
+  throw new Error('Password is not equal!')
 }
 
 const create = data => validateSession(data).then(checkPass).then(addSession)
+
 export { create }
