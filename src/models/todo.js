@@ -25,10 +25,14 @@ const toDoSchema = new Schema({
   archive: {
     type: Boolean,
     default: false
+  },
+  email: {
+    type: String,
+    required: true
   }
 })
 
-toDoSchema.index({ archive: 1 })
+toDoSchema.index({ email: 1, archive: 1 })
 
 const Todo = mongoose.model('Todo', toDoSchema)
 
@@ -38,35 +42,35 @@ const convertSingleId = todo => {
 }
 const convertIds = todos => todos.map(convertSingleId)
 
-const add = todo => Todo.create(todo)
+const add = email => todo => Todo.create({ ...todo, email })
   .then(prop('_doc'))
   .then(convertSingleId)
 
-const getTodos = ({ page, size }) =>
-  Todo.find({ archive: false })
+const getTodos = email => ({ page, size }) =>
+  Todo.find({ email, archive: false })
     .sort({ createdDate: -1 })
     .skip((page - 1) * size)
     .limit(size)
     .lean()
     .then(convertIds)
 
-const getArchivedTodos = ({ page, size }) =>
-  Todo.find({ archive: true })
+const getArchivedTodos = email => ({ page, size }) =>
+  Todo.find({ email, archive: true })
     .sort({ createdDate: -1 })
     .skip((page - 1) * size)
     .limit(size)
     .lean()
     .then(convertIds)
 
-const todoById = (id) => Todo.findById(id).sort({ createdDate: -1 })
+const todoById = (id, email) => Todo.findById(id).sort({ createdDate: -1, email })
 
-const updateTodos = todo => {
-  const filter = { _id: todo.id }
+const updateTodos = email => todo => {
+  const filter = { _id: todo.id, email }
   const updated = { $set: { title: todo.title, description: todo.description } }
   return Todo.updateOne(filter, updated)
 }
-const archiveTodos = (todo) => {
-  const filter = { _id: todo.id }
+const archiveTodos = email => todo => {
+  const filter = { _id: todo.id, email }
   const updated = { $set: { archive: !todo.archive } }
   return Todo.updateOne(filter, updated)
 }

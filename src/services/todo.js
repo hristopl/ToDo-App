@@ -19,22 +19,22 @@ const validatePageAndSize = (page, size) => {
   return Promise.reject(new Error('Page or size is not valid!'))
 }
 
-const create = todo => validate(todo).then(add)
+const create = (todo, email) => validate(todo).then(add(email))
 
-const update = todo => validate(todo).then(updateTodos)
-const archive = todo => validate(todo).then(archiveTodos)
-const get = ({ page = 1, size = 5 }) => {
+const update = (todo, email) => validate(todo).then(updateTodos(email))
+const archive = (todo, email) => validate(todo).then(archiveTodos(email))
+const get = ({ page = 1, size = 5 }, email) => {
   const pageNum = parseInt(page)
   const pageSize = parseInt(size)
-  return validatePageAndSize(pageNum, pageSize).then(getTodos)
+  return validatePageAndSize(pageNum, pageSize).then(getTodos(email))
 }
 
 const getById = todo => todoById(todo)
-const getArchived = ({ page = 1, size = 5 }) => {
+const getArchived = ({ page = 1, size = 5 }, email) => {
   const pageNum = parseInt(page)
   const pageSize = parseInt(size)
 
-  return validatePageAndSize(pageNum, pageSize).then(getArchivedTodos)
+  return validatePageAndSize(pageNum, pageSize).then(getArchivedTodos(email))
 }
 
 const del = id => deleteTodoById(id)
