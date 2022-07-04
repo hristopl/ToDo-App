@@ -4,11 +4,16 @@ const auth = (req, res, next) => {
   const sessionId = req.query.sessionId
 
   return authenticate(sessionId)
-    .catch(e => res.status(401).json({ status: 'err', message: e.message }))
-    .then(email => {
-      res.locals.email = email
-      next()
+    .then(session => {
+      console.log(session)
+      if (session !== null) {
+        res.locals.email = session.email
+        next()
+      } else {
+        throw new Error('User not authenticated!')
+      }
     })
+    .catch(e => res.status(401).json({ status: 'err', message: e.message }))
 }
 
 export { auth }

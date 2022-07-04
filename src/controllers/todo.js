@@ -12,6 +12,8 @@ const createTodos = (req, res) => {
 const listTodos = (req, res) => {
   const url = req.query
   const email = res.locals.email
+  console.log(email)
+
   return get(url, email)
     .then((todos) => res.json(todos))
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))
@@ -19,6 +21,7 @@ const listTodos = (req, res) => {
 
 const todoById = (req, res) => {
   const id = req.params.id
+
   return getById(id)
     .then((todo) => res.json(todo))
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))
@@ -27,6 +30,7 @@ const todoById = (req, res) => {
 const listArchivedTodos = (req, res) => {
   const url = req.query
   const email = res.locals.email
+
   return getArchived(url, email)
     .then((todo) => res.json(todo))
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))
@@ -35,21 +39,24 @@ const listArchivedTodos = (req, res) => {
 const updateTodos = (req, res) => {
   const todo = req.body
   const email = res.locals.email
+
   return update(todo, email)
     .then(() => res.json({ status: 'Ok!' }))
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))
 }
 
 const archiveTodos = (req, res) => {
-  const todo = req.body
+  const id = req.params.id
   const email = res.locals.email
-  return archive(todo, email)
+
+  return archive(id, email)
     .then(() => res.json({ status: 'Ok!' }))
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))
 }
 
 const deleteTodo = (req, res) => {
   const todo = req.params.id
+
   return del(todo)
     .then(res.json({ status: 'Ok!' }))
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))

@@ -10,13 +10,13 @@ app.use(express.json())
 
 app.post('/todo', [auth], createTodos)
 
-app.post('/register', [auth], createUser)
+app.post('/register', createUser)
 
-app.post('/login', [auth], createSession)
+app.post('/login', createSession)
 
 app.get('/users/id/:id', [auth], listUser)
 
-app.get('/todo', [auth], listTodos)
+app.get('/todo', [auth], listTodos, createSession)
 
 app.get('/todo/id/:id', [auth], todoById)
 
@@ -24,7 +24,7 @@ app.get('/todo/archive', [auth], listArchivedTodos)
 
 app.put('/todo', [auth], updateTodos)
 
-app.put('/todo/archive', [auth], archiveTodos)
+app.get('/todo/archive/:id', [auth], archiveTodos)
 
 app.delete('/todo/:id', [auth], deleteTodo)
 

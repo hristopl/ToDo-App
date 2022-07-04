@@ -3,7 +3,7 @@ import { getTodos } from '../../src/models/todo'
 import { describe, expect, test } from '@jest/globals'
 
 jest.mock('mongoose', () => ({
-  model: jest.fn(),
+  model: jest.fn().mockReturnThis(),
   connect: jest.fn(),
   Schema: function () { return { index: jest.fn() } }
 })
@@ -28,12 +28,12 @@ const skipObj = obj(skipFn, limitObj)
 const sortObj = obj(sortFn, skipObj)
 const findObj = obj(findFn, sortObj)
 
-describe.skip('getTodos', () => {
-  test.skip('should work', () => {
-    mongoose.model.mockImplementation(() => ({ find: findObj }))
+describe('getTodos', () => {
+  test('should work', () => {
+    mongoose.model.mockReturnThis(() => ({ find: findObj }))
 
     getTodos({ page: 1, size: 5 })
 
-    expect(limit).toHaveBeenCalledWith(5)
+    expect(limitFn).toHaveBeenCalledWith(5)
   })
 })

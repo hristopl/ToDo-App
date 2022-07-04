@@ -1,5 +1,5 @@
-import { findSessionById } from '../models/session.js'
+import { findSessionById, refreshSession } from '../models/session.js'
 
-const authenticate = sessionId => findSessionById(sessionId)
+const authenticate = sessionId => findSessionById(sessionId).then(refreshSession)
 
 export { authenticate }

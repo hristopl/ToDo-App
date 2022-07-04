@@ -1,11 +1,11 @@
 import { prop } from 'ramda'
 import mongoose from 'mongoose'
 
-const db = mongoose.connection
-db.on('error', console.error.bind(console, 'connection error: '))
-db.once('open', () => {
-  console.log('Connected successfully')
-})
+// const db = mongoose.connection
+// db.on('error', console.error.bind(console, 'connection error: '))
+// db.once('open', () => {
+//   console.log('Connected successfully')
+// })
 
 const Schema = mongoose.Schema
 
@@ -62,15 +62,16 @@ const getArchivedTodos = email => ({ page, size }) =>
     .lean()
     .then(convertIds)
 
-const todoById = (id, email) => Todo.findById(id).sort({ createdDate: -1, email })
+const todoById = (id, email) => Todo.findOne({ _id: id, email }).lean()
 
 const updateTodos = email => todo => {
   const filter = { _id: todo.id, email }
   const updated = { $set: { title: todo.title, description: todo.description } }
   return Todo.updateOne(filter, updated)
 }
-const archiveTodos = email => todo => {
-  const filter = { _id: todo.id, email }
+const archiveTodos = async (id, email) => {
+  const todo = await todoById(id, email)
+  const filter = { _id: id, email }
   const updated = { $set: { archive: !todo.archive } }
   return Todo.updateOne(filter, updated)
 }
