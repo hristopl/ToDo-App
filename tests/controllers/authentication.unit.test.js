@@ -1,7 +1,6 @@
 import { auth } from '../../src/controllers/authentication'
 import { authenticate } from '../../src/services/authentication'
 import { describe, test, expect } from '@jest/globals'
-import e from 'express'
 
 const json = jest.fn()
 const status = jest.fn()

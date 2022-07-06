@@ -28,7 +28,6 @@ const archive = (id, email) => archiveTodos(id, email)
 const getFn = fn => ({ page = 1, size = 5 }, email) => {
   const pageNum = parseInt(page)
   const pageSize = parseInt(size)
-  console.log(email)
   return validatePageAndSize(pageNum, pageSize).then(fn(email))
 }
 
@@ -36,7 +35,7 @@ const get = getFn(getTodos)
 
 const getArchived = getFn(getArchivedTodos)
 
-const getById = todo => todoById(todo)
+const getById = (todo, email) => todoById(todo, email)
 
 const del = id => deleteTodoById(id)
 

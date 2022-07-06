@@ -1,34 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1656498574355" clover="3.2.0">
-  <project timestamp="1656498574356" name="All files">
-    <metrics statements="25" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="13" coveredmethods="1" elements="38" coveredelements="14" complexity="0" loc="25" ncloc="25" packages="1" files="1" classes="1"/>
-    <file name="todo.js" path="C:\Users\User\Desktop\ToDo-App\src\models\todo.js">
-      <metrics statements="25" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="13" coveredmethods="1"/>
-      <line num="10" count="1" type="stmt"/>
-      <line num="12" count="1" type="stmt"/>
-      <line num="35" count="1" type="stmt"/>
-      <line num="37" count="1" type="stmt"/>
-      <line num="39" count="1" type="stmt"/>
-      <line num="40" count="0" type="stmt"/>
-      <line num="41" count="0" type="stmt"/>
-      <line num="43" count="1" type="stmt"/>
-      <line num="45" count="1" type="stmt"/>
-      <line num="49" count="1" type="stmt"/>
-      <line num="50" count="0" type="stmt"/>
-      <line num="57" count="1" type="stmt"/>
-      <line num="58" count="0" type="stmt"/>
-      <line num="65" count="1" type="stmt"/>
-      <line num="67" count="1" type="stmt"/>
-      <line num="68" count="0" type="stmt"/>
-      <line num="69" count="0" type="stmt"/>
-      <line num="70" count="0" type="stmt"/>
-      <line num="72" count="1" type="stmt"/>
-      <line num="73" count="0" type="stmt"/>
-      <line num="74" count="0" type="stmt"/>
-      <line num="75" count="0" type="stmt"/>
-      <line num="76" count="0" type="stmt"/>
-      <line num="77" count="0" type="stmt"/>
-      <line num="79" count="1" type="stmt"/>
+<coverage generated="1657106861511" clover="3.2.0">
+  <project timestamp="1657106861512" name="All files">
+    <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2" elements="9" coveredelements="9" complexity="0" loc="7" ncloc="7" packages="1" files="1" classes="1"/>
+    <file name="user.js" path="C:\Users\User\Desktop\ToDo-App\src\models\user.js">
+      <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <line num="9" count="1" type="stmt"/>
+      <line num="11" count="1" type="stmt"/>
+      <line num="26" count="1" type="stmt"/>
+      <line num="28" count="1" type="stmt"/>
+      <line num="29" count="1" type="stmt"/>
+      <line num="30" count="1" type="stmt"/>
+      <line num="33" count="1" type="stmt"/>
     </file>
   </project>
 </coverage>

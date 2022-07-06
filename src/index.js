@@ -16,7 +16,7 @@ app.post('/login', createSession)
 
 app.get('/users/id/:id', [auth], listUser)
 
-app.get('/todo', [auth], listTodos, createSession)
+app.get('/todo', [auth], listTodos)
 
 app.get('/todo/id/:id', [auth], todoById)
 

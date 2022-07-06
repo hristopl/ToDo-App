@@ -1,10 +1,10 @@
 import mongoose from 'mongoose'
 
-const db = mongoose.connection
-db.on('error', console.error.bind(console, 'connection error: '))
-db.once('open', () => {
-  console.log('Connected successfully')
-})
+// const db = mongoose.connection
+// db.on('error', console.error.bind(console, 'connection error: '))
+// db.once('open', () => {
+//   console.log('Connected successfully')
+// })
 
 const Schema = mongoose.Schema
 

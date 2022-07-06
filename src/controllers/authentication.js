@@ -5,7 +5,6 @@ const auth = (req, res, next) => {
 
   return authenticate(sessionId)
     .then(session => {
-      console.log(session)
       if (session !== null) {
         res.locals.email = session.email
         next()

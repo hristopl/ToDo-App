@@ -12,7 +12,6 @@ const createTodos = (req, res) => {
 const listTodos = (req, res) => {
   const url = req.query
   const email = res.locals.email
-  console.log(email)
 
   return get(url, email)
     .then((todos) => res.json(todos))
@@ -21,8 +20,9 @@ const listTodos = (req, res) => {
 
 const todoById = (req, res) => {
   const id = req.params.id
+  const email = res.locals.email
 
-  return getById(id)
+  return getById(id, email)
     .then((todo) => res.json(todo))
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))
 }
