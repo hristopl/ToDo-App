@@ -16,19 +16,8 @@ jest.mock('mongoose', () => ({
     findByIdAndDelete: jest.fn().mockReturnThis()
   },
   model: function () { return this.todoModel },
-  connection: jest.fn(),
+  connect: jest.fn(),
   Schema: function () { return { index: jest.fn() } }
-}))
-
-jest.mock('../../src/models/todo', () => ({
-  todoById: jest.fn(),
-  add: jest.fn(),
-  getTodos: jest.fn(),
-  getArchivedTodos: jest.fn(),
-  updateTodos: jest.fn(),
-  archiveTodos: jest.fn(),
-  deleteTodoById: jest.fn(),
-  convertSingleId: jest.fn()
 }))
 
 describe('add', () => {
@@ -66,19 +55,10 @@ describe('getTodos', () => {
   })
 })
 
-describe.skip('getArchivedTodos', () => {
+describe('getArchivedTodos', () => {
   const Todo = mongoose.model()
 
-  const todo = Todo.find.mockReturnValueOnce({
-    _id: '62x6a5sa66264',
-    title: 'Go to work',
-    description: 'Go to work',
-    archived: true,
-    cratedDate: Date.now(),
-    email: 'hristo@gmail.com'
-  })
-
-  const { email } = todo
+  const email = 'hristo@gmail.com'
 
   getArchivedTodos(email)({ page: 1, size: 5 })
 
@@ -128,16 +108,19 @@ describe('archiveTodos', () => {
   test('should archive todos', async () => {
     const Todo = mongoose.model()
 
-    const todo = todoById.mockReturnValue({
-      id: '6a4s6da6s4da6',
+    const todo = {
+      id: '6125a6s56182',
       email: 'hristo@gmail.com',
-      archive: false
-    })
+      archive: true
+    }
 
-    const { id, email } = todo
+    Todo.findOne.mockReturnValue({ lean: () => Promise.resolve(todo) })
+    Todo.updateOne.mockResolvedValue({})
+
+    const { id, email, archive } = todo
 
     const filter = { _id: id, email }
-    const updated = { $set: { archive: !todo.archive } }
+    const updated = { $set: { archive: !archive } }
 
     await archiveTodos(id, email)
 

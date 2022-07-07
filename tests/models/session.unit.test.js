@@ -12,12 +12,8 @@ jest.mock('mongoose', () => ({
   },
   model: function () { return this.sessionModel },
   connect: jest.fn(),
+  connection: { collection: () => ({ createIndex: jest.fn() }) },
   Schema: function () { return { index: jest.fn() } }
-}))
-
-jest.mock('mongodb', () => ({
-  db: jest.fn(),
-  collection: jest.fn()
 }))
 
 describe('addSession', () => {
@@ -49,21 +45,26 @@ describe('findSessionById', () => {
   })
 })
 
-describе('refreshSession', () => {
+describe('refreshSession', () => {
   test('should refresh session', async () => {
     const Session = mongoose.model()
 
     const session = {
+      _id: '6165a6z65as62'
+    }
+
+    Session.updateOne.mockResolvedValue({
       _id: '6165a6z65as62',
       email: 'hristo@gmail.com',
       createdAt: Date.now()
-    }
+    })
 
     const filter = { _id: session._id }
     const updated = { $set: { createdAt: Date.now() } }
 
-    await refreshSession(filter, updated)
+    const result = await refreshSession(session)
 
-    expect(Session.updateOne).toHaveBeenCalled(filter, updated)
+    expect(Session.updateOne).toHaveBeenCalledWith(filter, updated)
+    expect(result).toBe(session)
   })
 })

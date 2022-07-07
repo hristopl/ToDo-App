@@ -1,5 +1,5 @@
 import { getTodos, getArchivedTodos, updateTodos, add, archiveTodos, todoById, deleteTodoById } from '../../src/models/todo'
-import { get, getArchived, update, isPositiveNumber, validatePageAndSize, validate, convertSingleId, create, archive, getById, del } from '../../src/services/todo'
+import { get, getArchived, update, isPositiveNumber, validatePageAndSize, validate, create, archive, getById, del } from '../../src/services/todo'
 import { describe, expect, test } from '@jest/globals'
 
 jest.mock('../../src/models/todo', () => ({
@@ -14,27 +14,19 @@ jest.mock('../../src/models/todo', () => ({
 
 describe('get', () => {
   test('should return todos', async () => {
-    await get({ page: 1, size: 5 })
+    const email = 'hristo@gmail.com'
+    await get({ page: 1, size: 5 }, email)
 
-    expect(getTodos).toHaveBeenCalledWith({ page: 1, size: 5 })
-  })
-  test('should parse page and size', async () => {
-    await get({ page: '1', size: '5' })
-
-    expect(getTodos).toHaveBeenCalledWith({ page: 1, size: 5 })
+    expect(getTodos).toHaveBeenCalledWith(email)
   })
 })
 
 describe('getArchived', () => {
   test('should return archived todos', async () => {
-    await getArchived({ page: 1, size: 5 })
+    const email = 'hristo@gmail.com'
+    await getArchived({ page: 1, size: 5 }, email)
 
-    expect(getArchivedTodos).toHaveBeenCalledWith({ page: 1, size: 5 })
-  })
-  test('should parse page and size', async () => {
-    await getArchived({ page: '1', size: '5' })
-
-    expect(getArchivedTodos).toHaveBeenCalledWith({ page: 1, size: 5 })
+    expect(getArchivedTodos).toHaveBeenCalledWith(email)
   })
 })
 
@@ -42,12 +34,15 @@ describe('update', () => {
   test('should update todo', async () => {
     const todo = {
       title: 'Go to gym',
-      description: 'Go to training today.'
+      description: 'Go to training today.',
+      email: 'hristo@gmail.com'
     }
 
-    await update(todo)
+    const { email } = todo
 
-    expect(updateTodos).toHaveBeenCalledWith(todo)
+    await update(todo, email)
+
+    expect(updateTodos).toHaveBeenCalledWith(email)
   })
 })
 
@@ -55,25 +50,32 @@ describe('create', () => {
   test('should create todo', async () => {
     const todo = {
       title: 'Go to gym',
-      description: 'Go to training today.'
+      description: 'Go to training today.',
+      email: 'hristo@gmail.com'
     }
 
-    await create(todo)
+    const { email } = todo
 
-    expect(add).toHaveBeenCalledWith(todo)
+    await create(todo, email)
+
+    expect(add).toHaveBeenCalledWith(email)
   })
 })
 
 describe('archive', () => {
   test('should archive todo', async () => {
     const todo = {
+      id: '545364a56a3546a',
       title: 'Go to gym',
-      description: 'Go to training today.'
+      description: 'Go to training today.',
+      email: 'hristo@gmail.com'
     }
 
-    await archive(todo)
+    const { id, email } = todo
 
-    expect(archiveTodos).toHaveBeenCalledWith(todo)
+    await archive(id, email)
+
+    expect(archiveTodos).toHaveBeenCalledWith(id, email)
   })
 })
 
@@ -81,12 +83,15 @@ describe('getById', () => {
   test('should get todo by Id', async () => {
     const todo = {
       title: 'Go to gym',
-      description: 'Go to training today.'
+      description: 'Go to training today.',
+      email: 'hristo@gmail.com'
     }
 
-    await getById(todo)
+    const { email } = todo
 
-    expect(todoById).toHaveBeenCalledWith(todo)
+    await getById(todo, email)
+
+    expect(todoById).toHaveBeenCalledWith(todo, email)
   })
 })
 
@@ -186,19 +191,5 @@ describe('validate', () => {
     } catch (err) {
       expect(err.message).toBe(message)
     }
-  })
-})
-
-describe.skip('convertSingleId', () => {
-  test('should convert Id of todo', () => {
-    const todo = {
-      _id: 194932042234
-    }
-
-    const result = convertSingleId(todo)
-
-    expect(result).toEqual({
-      id: 194932042234
-    })
   })
 })

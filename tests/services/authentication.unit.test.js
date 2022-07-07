@@ -1,19 +1,22 @@
 import { authenticate } from '../../src/services/authentication'
-import { findSessionById } from '../../src/models/session'
+import { findSessionById, refreshSession } from '../../src/models/session'
 import { describe, test, expect } from '@jest/globals'
 
 jest.mock('../../src/models/session', () => ({
-  findSessionById: jest.fn()
+  findSessionById: jest.fn(),
+  refreshSession: jest.fn()
 }))
 
 describe('authenticate', () => {
   test('should authenticate', async () => {
-    const sessionId = {
-      sessionId: '12837j12831j1gfg123'
-    }
+    const id = '123'
+    const session = '567'
 
-    await authenticate(sessionId)
+    findSessionById.mockResolvedValue(session)
 
-    expect(findSessionById).toHaveBeenCalledWith(sessionId)
+    await authenticate(id)
+
+    expect(findSessionById).toHaveBeenCalledWith(id)
+    expect(refreshSession).toHaveBeenCalledWith(session)
   })
 })

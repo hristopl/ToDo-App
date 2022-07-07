@@ -5,7 +5,7 @@ const createTodos = (req, res) => {
   const email = res.locals.email
 
   return create(todo, email)
-    .then((todo) => res.json({ status: 'Ok!', email, ...todo }))
+    .then((todo) => res.json({ status: 'Ok!', todo: { ...todo, email } }))
     .catch(e => res.status(500).json({ status: 'err', message: e.message }))
 }
 

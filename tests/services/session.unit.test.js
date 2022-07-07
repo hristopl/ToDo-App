@@ -54,6 +54,20 @@ describe('checkPass', () => {
 
     expect(result).toEqual(auth)
   })
+  test('should throw error', async () => {
+    const message = 'Password doesn\'t match!'
+    const auth = {
+      email: 'icko@abv.bg',
+      password: '12344'
+    }
+
+    try {
+      await checkPass(auth)
+      throw new Error('Should not get here!')
+    } catch (err) {
+      expect(err.message).toBe(message)
+    }
+  })
 })
 
 describe('create', () => {

@@ -1,7 +1,6 @@
 import { validateUser, hashPassword, create, listUserByEmail } from '../../src/services/user.js'
 import { addUser, findByEmail } from '../../src/models/user.js'
 import { describe, test, expect } from '@jest/globals'
-
 jest.mock('../../src/models/user', () => ({
   addUser: jest.fn(),
   findByEmail: jest.fn()
