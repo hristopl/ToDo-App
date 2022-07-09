@@ -23,8 +23,7 @@ export default {
   // collectCoverageFrom: undefined,
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: 'coverage'
-
+  coverageDirectory: 'coverage',
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
   //   "\\\\node_modules\\\\"
@@ -109,8 +108,7 @@ export default {
   // reporters: undefined,
 
   // Automatically reset mock state before every test
-  // resetMocks: false,
-
+  // resetMocks: true
   // Reset the module registry before running each individual test
   // resetModules: false,
 
@@ -118,7 +116,7 @@ export default {
   // resolver: undefined,
 
   // Automatically restore mock state and implementation before every test
-  // restoreMocks: false,
+  restoreMocks: true
 
   // The root directory that Jest should scan for tests and modules within
   // rootDir: undefined,

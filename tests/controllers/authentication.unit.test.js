@@ -1,6 +1,7 @@
 import { auth } from '../../src/controllers/authentication'
 import { authenticate } from '../../src/services/authentication'
 import { describe, test, expect } from '@jest/globals'
+
 const json = jest.fn()
 const status = jest.fn()
 const send = jest.fn()
@@ -34,17 +35,15 @@ describe('auth', () => {
     expect(authenticate).toHaveBeenCalledWith(session.sessionId)
     expect(next).toHaveBeenCalled()
   })
-  test.skip('should throw error if session is null', async () => {
+  test('should throw error if session is null', async () => {
     const sessionId = '123'
 
-    authenticate.mockResolvedValue(new Error('User not authenticated!'))
+    authenticate.mockResolvedValue(null)
 
-    try {
-      await auth({ query: sessionId }, res, next)
-      throw new Error('Should not get here!')
-    } catch (err) {
-      expect(err.message).toEqual('User not authenticated!')
-    }
+    await auth({ query: sessionId }, res, next)
+
+    expect(status).toHaveBeenCalledWith(401)
+    expect(json).toHaveBeenCalledWith({ status: 'err', message: 'User not authenticated!' })
   })
   test('should throw error', async () => {
     const session = {

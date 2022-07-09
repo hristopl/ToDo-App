@@ -61,12 +61,9 @@ describe('checkPass', () => {
       password: '12344'
     }
 
-    try {
-      await checkPass(auth)
-      throw new Error('Should not get here!')
-    } catch (err) {
-      expect(err.message).toBe(message)
-    }
+    findByEmail.mockResolvedValue({ password: 'wrong' })
+
+    expect(checkPass(auth)).rejects.toThrow(message)
   })
 })
 
@@ -76,6 +73,10 @@ describe('create', () => {
       email: 'icko@abv.bg',
       password: '12345'
     }
+
+    findByEmail.mockResolvedValue({
+      password: '827ccb0eea8a706c4c34a16891f84e7b'
+    })
 
     await create(data)
 

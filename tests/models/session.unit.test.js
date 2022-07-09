@@ -56,15 +56,17 @@ describe('refreshSession', () => {
     Session.updateOne.mockResolvedValue({
       _id: '6165a6z65as62',
       email: 'hristo@gmail.com',
-      createdAt: Date.now()
+      createdAt: new Date('1995-12-17T03:24:00')
     })
 
     const filter = { _id: session._id }
-    const updated = { $set: { createdAt: Date.now() } }
 
     const result = await refreshSession(session)
 
-    expect(Session.updateOne).toHaveBeenCalledWith(filter, updated)
+    const [filterCall, updateCall] = Session.updateOne.mock.calls[0]
+
+    expect(filterCall).toEqual(filter)
+    expect(updateCall.$set.createdAt).toBeDefined()
     expect(result).toBe(session)
   })
 })
