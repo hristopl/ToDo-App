@@ -18,19 +18,21 @@ describe('validateUser', () => {
 
     expect(result).toBe(user)
   })
-  test('should throw error', async () => {
+  test('should throw error', () => {
     const message = 'Name, email or password are required!'
 
     const user = {
       name: null
     }
 
-    try {
-      await validateUser(user)
-      throw new Error('Should not get here!')
-    } catch (err) {
-      expect(err.message).toBe(message)
-    }
+    // try {
+    //   await validateUser(user)
+    //   throw new Error('Should not get here!')
+    // } catch (err) {
+    //   expect(err.message).toBe(message)
+    // }
+
+    expect(validateUser(user)).rejects.toThrow(message)
   })
 })
 

@@ -146,24 +146,28 @@ describe('validatePageAndSize', () => {
     const page = 4
     const size = -1
 
-    try {
-      await validatePageAndSize(page, size)
-      throw new Error('Should not get here!')
-    } catch (err) {
-      expect(err.message).toBe(message)
-    }
+    // try {
+    //   await validatePageAndSize(page, size)
+    //   throw new Error('Should not get here!')
+    // } catch (err) {
+    //   expect(err.message).toBe(message)
+    // }
+
+    expect(validatePageAndSize(page, size)).rejects.toThrow(message)
   })
   test('should throw error if page or size is NaN', async () => {
     const message = 'Page or size is not valid!'
     const page = NaN
     const size = 4
 
-    try {
-      await validatePageAndSize(page, size)
-      throw new Error('Should not get here!')
-    } catch (err) {
-      expect(err.message).toBe(message)
-    }
+    // try {
+    //   await validatePageAndSize(page, size)
+    //   throw new Error('Should not get here!')
+    // } catch (err) {
+    //   expect(err.message).toBe(message)
+    // }
+
+    expect(validatePageAndSize(page, size)).rejects.toThrow(message)
   })
 })
 
@@ -185,11 +189,13 @@ describe('validate', () => {
       description: 'I have to take a nap.'
     }
 
-    try {
-      await validate(todo)
-      throw new Error('Should not get here!')
-    } catch (err) {
-      expect(err.message).toBe(message)
-    }
+    // try {
+    //   await validate(todo)
+    //   throw new Error('Should not get here!')
+    // } catch (err) {
+    //   expect(err.message).toBe(message)
+    // }
+
+    expect(validate(todo)).rejects.toThrow(message)
   })
 })

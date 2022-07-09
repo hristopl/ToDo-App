@@ -22,19 +22,14 @@ describe('validateSession', () => {
 
     expect(result).toBe(auth)
   })
-  test('should throw error', async () => {
+  test('should throw error', () => {
     const message = 'Email, password are required!'
 
     const auth = {
       email: null
     }
 
-    try {
-      await validateSession(auth)
-      throw new Error('Should not get here!')
-    } catch (err) {
-      expect(err.message).toBe(message)
-    }
+    expect(validateSession(auth)).rejects.toThrow(message)
   })
 })
 
@@ -54,7 +49,7 @@ describe('checkPass', () => {
 
     expect(result).toEqual(auth)
   })
-  test('should throw error', async () => {
+  test('should throw error', () => {
     const message = 'Password doesn\'t match!'
     const auth = {
       email: 'icko@abv.bg',
