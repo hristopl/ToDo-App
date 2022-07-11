@@ -25,16 +25,6 @@ const update = (todo, email) => validate(todo).then(updateTodos(email))
 
 const archive = (id, email) => archiveTodos(id, email)
 
-// const getFn = fn => ({ page = 1, size = 5 }, email) => {
-//   const pageNum = parseInt(page)
-//   const pageSize = parseInt(size)
-//   return validatePageAndSize(pageNum, pageSize).then(fn(email))
-// }
-
-// const get = getFn(getTodos)
-
-// const getArchived = getFn(getArchivedTodos)
-
 const get = ({ page = 1, size = 5 }, email) => {
   const pageNum = parseInt(page)
   const pageSize = parseInt(size)
